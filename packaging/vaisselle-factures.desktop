@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Application
+Name=Vaisselle Factures
+Comment=Gestion de devis et factures pour location de vaisselle
+Exec=vaisselle-factures
+Terminal=false
+Categories=Office;Finance;

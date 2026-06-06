@@ -1,0 +1,17 @@
+# Build artifacts
+build/
+vaisselle-factures
+*.o
+*.so
+*.a
+
+# Runtime data
+*.db
+*.sqlite
+*.sqlite3
+exports/
+
+# Editor
+.vscode/
+.idea/
+*~
