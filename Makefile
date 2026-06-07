@@ -22,4 +22,7 @@ install: $(APP)
 clean:
 	rm -f $(APP) $(OBJ)
 
-.PHONY: all install clean
+test:
+	sh tests/test_vat_defaults.sh
+
+.PHONY: all install clean test

@@ -41,7 +41,8 @@ void db_close(App *app) {
 int db_init(sqlite3 *db) {
     const char *sql =
         "CREATE TABLE IF NOT EXISTS company(id INTEGER PRIMARY KEY CHECK(id=1), name TEXT, siret TEXT, address TEXT, email TEXT, phone TEXT, legal TEXT);"
-        "INSERT OR IGNORE INTO company(id,name,siret,address,email,phone,legal) VALUES(1,'','','','','','TVA non applicable, art. 293 B du CGI');"
+        "INSERT OR IGNORE INTO company(id,name,siret,address,email,phone,legal) VALUES(1,'','','','','','');"
+        "UPDATE company SET legal='' WHERE id=1 AND legal='TVA non applicable, art. ' || '293 B du CGI';"
         "CREATE TABLE IF NOT EXISTS clients(id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT NOT NULL, address TEXT, email TEXT, phone TEXT, created_at TEXT DEFAULT CURRENT_TIMESTAMP);"
         "CREATE TABLE IF NOT EXISTS invoices(id INTEGER PRIMARY KEY AUTOINCREMENT, number TEXT UNIQUE, client_id INTEGER NOT NULL REFERENCES clients(id), date TEXT DEFAULT CURRENT_DATE, status TEXT DEFAULT 'brouillon', total_ht REAL DEFAULT 0, total_tva REAL DEFAULT 0, total_ttc REAL DEFAULT 0);"
         "CREATE TABLE IF NOT EXISTS invoice_lines(id INTEGER PRIMARY KEY AUTOINCREMENT, invoice_id INTEGER NOT NULL REFERENCES invoices(id) ON DELETE CASCADE, description TEXT NOT NULL, quantity REAL NOT NULL, unit_price REAL NOT NULL, vat_rate REAL NOT NULL, line_ht REAL NOT NULL, line_tva REAL NOT NULL, line_ttc REAL NOT NULL);";
