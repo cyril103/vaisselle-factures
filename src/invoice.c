@@ -40,12 +40,17 @@ char *invoice_export_html(App *app, int invoice_id) {
 
     char *dir = g_build_filename(g_get_home_dir(), "FacturesVaisselle", NULL);
     g_mkdir_with_parents(dir, 0700);
-    char *safe = g_strdup(num); for (char *p=safe; *p; p++) if (*p=='/' || *p==' ') *p='-';
+    char *safe = g_strdup(num);
+    for (char *p=safe; *p; p++) {
+        if (*p=='/' || *p==' ') *p='-';
+    }
     char *path = g_strdup_printf("%s/%s.html", dir, safe);
     FILE *f = fopen(path, "w");
     if (!f) { g_free(path); path=NULL; }
     else { fputs(html->str, f); fclose(f); }
     g_string_free(html, TRUE);
-    g_free(num);g_free(date);g_free(cname);g_free(caddr);g_free(cemail);g_free(cphone);g_free(oname);g_free(osiret);g_free(oaddr);g_free(oemail);g_free(ophone);g_free(olegal);g_free(dir);g_free(safe);
+    g_free(num);g_free(date);g_free(cname);g_free(caddr);g_free(cemail);g_free(cphone);
+    g_free(oname);g_free(osiret);g_free(oaddr);g_free(oemail);g_free(ophone);g_free(olegal);
+    g_free(dir);g_free(safe);
     return path;
 }
