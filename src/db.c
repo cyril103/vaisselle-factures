@@ -55,8 +55,7 @@ int db_init(sqlite3 *db) {
     int rc = sqlite3_exec(db, sql, NULL, NULL, &err);
     if (rc != SQLITE_OK) {
         if (err) {
-            fprintf(stderr, "SQL error during init: %s
-", err);
+            fprintf(stderr, "SQL error during init: %s\n", err);
             sqlite3_free(err);
         }
         return rc;
@@ -185,7 +184,7 @@ static char *next_invoice_number(sqlite3 *db) {
             return g_strdup("FAC-ERROR");
         }
     }
-    g_free(num);
+    
     return g_strdup("FAC-ERROR");
 }
 
