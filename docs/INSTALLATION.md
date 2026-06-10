@@ -37,7 +37,7 @@ La base SQLite est créée automatiquement dans :
 ~/.local/share/vaisselle-factures/vaisselle_factures.db
 ```
 
-Les factures exportées en HTML sont créées dans :
+Les factures exportées en PDF sont créées dans :
 
 ```text
 ~/FacturesVaisselle/

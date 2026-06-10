@@ -11,7 +11,7 @@ Objectif : fonctionner sur un portable ancien sous Linux Mint, sans serveur, san
 - Création de factures avec lignes de location : désignation, quantité, prix unitaire HT, TVA.
 - Numérotation automatique `FAC-AAAA-0001`.
 - Statuts : brouillon, envoyée, payée.
-- Export HTML imprimable depuis Firefox/Chromium ou LibreOffice.
+- Export PDF direct dans `~/FacturesVaisselle/`.
 - Base locale SQLite, utilisable hors ligne.
 
 ## Choix techniques
@@ -43,8 +43,8 @@ make
 1. Ouvrir l’onglet **Entreprise** et renseigner les informations qui apparaîtront sur les factures.
 2. Ouvrir **Clients**, saisir un client et cliquer **Ajouter client**.
 3. Ouvrir **Facture**, sélectionner le client, ajouter les lignes de location, puis cliquer **Créer facture**.
-4. Dans **Factures**, sélectionner une facture et cliquer **Exporter HTML**.
-5. Ouvrir le fichier HTML généré et imprimer en PDF si besoin.
+4. Dans **Factures**, sélectionner une facture et cliquer **Exporter PDF**.
+5. Ouvrir le fichier PDF généré dans `~/FacturesVaisselle/`.
 
 ## Sauvegarde
 
@@ -59,6 +59,6 @@ Sauvegarder régulièrement :
 
 - Pas encore de devis transformables en factures.
 - Pas encore de catalogue d’articles réutilisable.
-- L’export est en HTML imprimable, volontairement plus léger qu’une dépendance PDF lourde.
+- L’export PDF utilise Cairo/Pango, déjà fournis par GTK, sans dépendance supplémentaire.
 
 Ces évolutions sont prévues facilement grâce à SQLite.

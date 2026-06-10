@@ -40,10 +40,11 @@ int db_create_invoice(App *app, int client_id);
 int db_load_invoices(App *app);
 int db_update_invoice_status(App *app, int invoice_id, const char *status);
 
-char *invoice_export_html(App *app, int invoice_id);
+char *invoice_export_pdf(App *app, int invoice_id);
 const char *invoice_export_error_message(void);
 void show_error(GtkWindow *parent, const char *message);
 void set_status(App *app, const char *message);
 char *app_data_path(const char *name);
+char *format_date_fr(const char *iso_date);
 
 #endif

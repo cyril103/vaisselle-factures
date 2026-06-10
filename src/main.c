@@ -68,7 +68,7 @@ static void update_selected_status(App *app, const char *status) { int id=select
 static void on_status_sent(GtkButton *b, gpointer data) { (void)b; update_selected_status(data, "envoyée"); }
 static void on_status_paid(GtkButton *b, gpointer data) { (void)b; update_selected_status(data, "payée"); }
 static void on_status_draft(GtkButton *b, gpointer data) { (void)b; update_selected_status(data, "brouillon"); }
-static void on_export(GtkButton *b, gpointer data) { (void)b; App *app=data; int id=selected_invoice_id(app); if (!id) { show_error(GTK_WINDOW(app->window),"Sélectionner une facture"); return; } char *p=invoice_export_html(app,id); if (p) { char *msg=g_strdup_printf("Export créé : %s", p); set_status(app,msg); g_free(msg); g_free(p); } else show_error(GTK_WINDOW(app->window), invoice_export_error_message()); }
+static void on_export(GtkButton *b, gpointer data) { (void)b; App *app=data; int id=selected_invoice_id(app); if (!id) { show_error(GTK_WINDOW(app->window),"Sélectionner une facture"); return; } char *p=invoice_export_pdf(app,id); if (p) { char *msg=g_strdup_printf("PDF créé : %s", p); set_status(app,msg); g_free(msg); g_free(p); } else show_error(GTK_WINDOW(app->window), invoice_export_error_message()); }
 
 static GtkWidget *company_tab(App *app) {
     GtkWidget *grid=gtk_grid_new(); gtk_grid_set_row_spacing(GTK_GRID(grid),8); gtk_grid_set_column_spacing(GTK_GRID(grid),8); gtk_container_set_border_width(GTK_CONTAINER(grid),12);
@@ -104,7 +104,7 @@ static GtkWidget *invoices_tab(App *app) {
     GtkWidget *draft=gtk_button_new_with_label("Brouillon");
     GtkWidget *sent=gtk_button_new_with_label("Marquer envoyée");
     GtkWidget *paid=gtk_button_new_with_label("Marquer payée");
-    GtkWidget *exp=gtk_button_new_with_label("Exporter HTML");
+    GtkWidget *exp=gtk_button_new_with_label("Exporter PDF");
     g_signal_connect(ref,"clicked",G_CALLBACK(on_refresh_invoices),app);
     g_signal_connect(draft,"clicked",G_CALLBACK(on_status_draft),app);
     g_signal_connect(sent,"clicked",G_CALLBACK(on_status_sent),app);

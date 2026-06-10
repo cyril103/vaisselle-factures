@@ -28,6 +28,18 @@ static const char *safe_text(const unsigned char *text) {
     return text ? (const char *)text : "";
 }
 
+char *format_date_fr(const char *iso_date) {
+    int year = 0, month = 0, day = 0;
+
+    if (!iso_date || !*iso_date) {
+        return g_strdup("");
+    }
+    if (sscanf(iso_date, "%d-%d-%d", &year, &month, &day) == 3) {
+        return g_strdup_printf("%02d/%02d/%04d", day, month, year);
+    }
+    return g_strdup(iso_date);
+}
+
 static int db_exec(sqlite3 *db, const char *sql) {
     return sqlite3_exec(db, sql, NULL, NULL, NULL) == SQLITE_OK;
 }
@@ -308,15 +320,18 @@ int db_load_invoices(App *app) {
 
     while (sqlite3_step(st) == SQLITE_ROW) {
         GtkTreeIter it;
+        char *date_fr = format_date_fr(safe_text(sqlite3_column_text(st, 2)));
+
         gtk_list_store_append(app->invoices_store, &it);
         gtk_list_store_set(app->invoices_store, &it,
                           0, sqlite3_column_int(st,0),
                           1, sqlite3_column_text(st,1),
-                          2, sqlite3_column_text(st,2),
+                          2, date_fr,
                           3, sqlite3_column_text(st,3),
                           4, sqlite3_column_double(st,4),
                           5, sqlite3_column_text(st,5),
                           -1);
+        g_free(date_fr);
     }
     sqlite3_finalize(st);
     return SQLITE_OK;
