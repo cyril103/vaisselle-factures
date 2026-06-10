@@ -40,6 +40,16 @@ static void on_add_client(GtkButton *b, gpointer data) {
 static void on_add_line(GtkButton *b, gpointer data) {
     (void)b; App *app=data; const char *desc=gtk_entry_get_text(GTK_ENTRY(app->line_desc));
     if (!desc || !*desc) { show_error(GTK_WINDOW(app->window),"Désignation obligatoire"); return; }
+    double qty = gtk_spin_button_get_value(GTK_SPIN_BUTTON(app->line_qty));
+    double price = gtk_spin_button_get_value(GTK_SPIN_BUTTON(app->line_price));
+    if (price <= 0) {
+        show_error(GTK_WINDOW(app->window), "Le prix unitaire doit être supérieur à 0");
+        return;
+    }
+    if (qty <= 0) {
+        show_error(GTK_WINDOW(app->window), "La quantité doit être supérieure à 0");
+        return;
+    }
     GtkTreeIter it; gtk_list_store_append(app->lines_store,&it);
     gtk_list_store_set(app->lines_store,&it,0,desc,1,gtk_spin_button_get_value(GTK_SPIN_BUTTON(app->line_qty)),2,gtk_spin_button_get_value(GTK_SPIN_BUTTON(app->line_price)),3,gtk_spin_button_get_value(GTK_SPIN_BUTTON(app->line_vat)),-1);
     gtk_entry_set_text(GTK_ENTRY(app->line_desc),""); set_status(app,"Ligne ajoutée");
